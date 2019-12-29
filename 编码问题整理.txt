@@ -19,6 +19,7 @@ tomcat默认字符集：管get方式请求
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
 编译时强制统一字符集编码：配置如下在此插件中配置
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
