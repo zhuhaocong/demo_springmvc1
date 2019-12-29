@@ -9,7 +9,14 @@
     <!--注解扫描-->
     <context:component-scan base-package="com.zhc.controller"/>
     <!--注解驱动：自动加载处理器映射器、处理器适配器 底层集成jackson进行对象json字符串之间的转换-->
-    <mvc:annotation-driven conversion-service="conversionServiceFactoryBean"/>
+    <mvc:annotation-driven conversion-service="conversionServiceFactoryBean">
+        <mvc:message-converters>
+            <!--修改返回值为String类型时的解码-->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg name="defaultCharset" value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <!--放行静态资源-->
     <mvc:default-servlet-handler/>
 

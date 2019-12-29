@@ -1,0 +1,32 @@
+
+浏览器传后台：乱码过滤器CharacterEncodingFilter 主要解决post请求
+tomcat默认字符集：管get方式请求
+    <plugin>
+      <groupId>org.apache.tomcat.maven</groupId>
+      <artifactId>tomcat7-maven-plugin</artifactId>
+      <version>2.2</version>
+      <configuration>
+        <!--默认编码-->
+        <uriEncoding>utf-8</uriEncoding>
+      </configuration>
+    </plugin>
+
+后台响应浏览器: 主要是返回值为String类型的xml中需配置消息转换器StringHttpMessageConverter
+    <mvc:annotation-driven><mvc:message-converters>...
+
+
+项目统一字符集编码：配置如下 可默认识别
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+编译时强制统一字符集编码：配置如下在此插件中配置
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+            <source>8</source>
+            <target>8</target>
+            <encoding>UTF-8</encoding>
+        </configuration>
+    </plugin>

@@ -55,14 +55,27 @@ public class TestController1 {
 /*-----------------------------------回显数据-----------------------------------------*/
     @RequestMapping("/test5")
     public void test5(HttpServletResponse response) throws IOException {
+        //对于响应乱码 乱码过滤器没用 需另外设置响应头如下或者：
+        //配置@RequestMapping(value = "/test5",produces = "application/json;charset=UTF-8")
         response.setHeader("Content-type","application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().print("数据回显测试1");
     }
 
-    @RequestMapping(value = "/test6",produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/test6"/*,produces = "application/json;charset=UTF-8"*/)
     @ResponseBody//告知SpringMVC框架 不进行视图跳转 直接进行数据响应
-    public String test6(){
+    public String test6(HttpServletResponse response){
+/*      失效 ：StringHttpMessageConverter设置的编码覆盖
+        设置响应头，设置解码
+        response.setHeader("Content-type","application/json;charset=UTF-8");
+        设置编码
+        response.setCharacterEncoding("UTF-8");
+
+        解决办法：
+        1.@RequestMapping(value = "/test8",produces = "application/json;charset=UTF-8")
+        2.<mvc:annotation-driven ><mvc:message-converters>...<../><../>
+          重点是修改StringHttpMessageConverter默认编码
+*/
         return "数据回显测试2";
     }
 
@@ -73,16 +86,9 @@ public class TestController1 {
     }
 
 
-    /*Bug：关于@ResponseBody 处理返回值为String类型的数据；此时在对应的类中设置了响应头以及编码还是final的
-    * 所以乱码拦截器无效、在此方法内设置编码也无效。需要在之后的@RequestMapping中设置produces
-    * */
-    @RequestMapping(value = "/test8",produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/test8")
     @ResponseBody
     public String test8(HttpServletResponse response) throws IOException {
-/*      失效
-        response.setHeader("Content-type","application/json;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-*/
         User user = new User();
         user.setUsername("张三");
         user.setAge("15");
