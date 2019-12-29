@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
+@RequestMapping("/tc1")
 public class TestController1 {
 
     @RequestMapping("/test")
