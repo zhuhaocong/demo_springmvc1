@@ -31,3 +31,21 @@ tomcat默认字符集：管get方式请求
             <encoding>UTF-8</encoding>
         </configuration>
     </plugin>
+
+
+首先要分清是tomcat日志编码，与idea的日志显示控制台编码
+
+tomcat日志编码：cmd内 "cd /d tomcat根目录" "bin\catalina.bat run" 运行，
+"chcp65001"切换cmd为utf8，"chcp 936"切换cmd为gbk，
+确定tomcat日志编码，一般因为
+tomcat/conf/logging.properties
+java.util.logging.ConsoleHandler.encoding = UTF-8已设置为utf8
+
+idea显示编码：windows默认用gbk所以idea显示默认为gbk编码，
+【一定】在 Help-- custom vm options 添加-Dfile.encoding=UTF-8，
+强制为utf8编码显示，
+不要自己改.vmoptions可能位置不对，
+idea会在用户目录复制一个
+
+【切忌】自己改tomcat的logging.properties 为GBk
+会导致调试时get/post参数乱码
